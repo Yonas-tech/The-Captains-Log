@@ -37,7 +37,12 @@ app.engine('jsx', require('jsx-view-engine').createEngine());
 
 // Index:
 app.get('/logs/', (req,res)=>{
-    res.render('Index')
+    Logs.find({}, (err, allLogs)=>{
+        res.render('Index', {
+            allLogs: allLogs
+        })
+    })
+    
 })
 
 
