@@ -24,7 +24,7 @@ mongoose.connection.once('open', () => {
 //     console.log('I run for all routes');
 //     next();
 // })
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false })); //body-parser
 app.use(methodOverride('_method'));
 
 
@@ -50,8 +50,26 @@ app.get('/logs/new', (req,res)=>{
 
 
 // Create: 
+app.post('/logs/', (req, res)=>{
+    if(req.body.shipIsBroken == 'on'){
+        req.body.shipIsBroken = true;
+    }else{
+        req.body.shipIsBroken = false;
+    }
+
+    
+    Log.create(req.body, (error, createdLogs)=>{
+        res.redirect('/logs/')
+    });
+})
 
 
 // Edit: 
 
 
+
+
+
+app.listen(port, ()=>{
+    console.log(`Server is listening on, ${port}`)
+})
