@@ -4,10 +4,10 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 require('dotenv').config();
 const port = 3000;
+const Logs = require('./models/logs')
 
 // Instantiate express app
 const app = express()
-
 
 // MONGOOSE:
 mongoose.set('strictQuery', true);
@@ -17,7 +17,6 @@ mongoose.connect(process.env.MONGO_URI,
 mongoose.connection.once('open', () => {
     console.log('connected to mongo');
 });
-
 
 // Middleware
 // app.use((req, res, next) => {
@@ -36,7 +35,9 @@ app.engine('jsx', require('jsx-view-engine').createEngine());
 // ROUTES: INDUCE
 
 // Index:
-
+app.get('/logs', (req,res)=>{
+    res.render('Index')
+})
 
 // New:
 app.get('/logs/new', (req,res)=>{
@@ -57,8 +58,7 @@ app.post('/logs/', (req, res)=>{
         req.body.shipIsBroken = false;
     }
 
-    
-    Log.create(req.body, (error, createdLogs)=>{
+    Logs.create(req.body, (error, createdLogs)=>{
         res.redirect('/logs/')
     });
 })
