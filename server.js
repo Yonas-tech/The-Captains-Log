@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 require('dotenv').config();
 const port = 3000;
-const Logs = require('./models/logs')
+const Logs = require('./models/logs');
+const seed = require("./resource/seed");
 
 // Instantiate express app
 const app = express()
@@ -35,9 +36,10 @@ app.engine('jsx', require('jsx-view-engine').createEngine());
 // ROUTES: INDUCE
 
 // Index:
-app.get('/logs', (req,res)=>{
+app.get('/logs/', (req,res)=>{
     res.render('Index')
 })
+
 
 // New:
 app.get('/logs/new', (req,res)=>{
@@ -62,6 +64,13 @@ app.post('/logs/', (req, res)=>{
         res.redirect('/logs/')
     });
 })
+
+
+app.get('/logs/seed', (req, res)=>{
+    Logs.create(seed, (err, data)=>{
+        res.redirect('/logs/');
+    })
+});
 
 
 // Edit: 
