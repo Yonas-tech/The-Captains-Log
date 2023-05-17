@@ -5,7 +5,7 @@ var router = express.Router();
 // SEED 
 router.get('/seed', (req, res)=>{
     Logs.create(seed, (err, foundLog)=>{
-        res.redirect('/logs/');
+        res.redirect('/');
     })
 });
 
@@ -26,7 +26,7 @@ router.get('/new', (req,res)=>{
 // Delete:
 router.delete('/:id', (req, res) =>{
     Logs.findByIdAndRemove(req.params.id, (err, data)=>{
-        res.redirect('/logs/');
+        res.redirect('/');
     })
 })
 
@@ -40,7 +40,7 @@ router.put('/:id', (req,res)=>{
 
     Logs.findByIdAndUpdate(req.params.id, req.body, (err, updatedLog)=>{
         console.log(updatedLog.title)
-        res.redirect(`/logs/${req.params.id}`); 
+        res.redirect(`/${req.params.id}`); 
     });
 });
 

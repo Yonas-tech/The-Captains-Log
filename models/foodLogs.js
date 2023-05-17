@@ -2,13 +2,12 @@ const { Timestamp } = require('mongodb');
 const mongoose = require('mongoose');
 
 const logsSchema = new mongoose.Schema({
-    title: String,
+    name: String,
     entry: String,
-    shipIsBroken: {type: Boolean, default: true}
-},
+    isDelicious: {type: Boolean, default: true}
+}, 
 {timestamps:true}
 )
-const Logs = mongoose.model("Logs", logsSchema)
+const FoodLogs = mongoose.model("Logs", logsSchema)
 
-module.exports = Logs; 
-
+module.exports = FoodLogs; 
