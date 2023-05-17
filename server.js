@@ -79,15 +79,26 @@ app.post('/logs/', (req, res)=>{
     });
 })
 
-
 app.get('/logs/seed', (req, res)=>{
-    Logs.create(seed, (err, data)=>{
+    Logs.create(seed, (err, foundLog)=>{
         res.redirect('/logs/');
     })
 });
 
 
 // Edit: 
+app.get('/logs/:id/edit', (req,res)=>{
+    console.log(req.params)
+    Logs.findById(req.params.id, (err, foundLog)=>{
+        if(!err){
+            res.render(
+                'Edit', {log: foundLog}
+            );
+        } else {
+            res.send({msg: err.message})
+        }
+    });
+});
 
 
 
