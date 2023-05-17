@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
+import DefaultLayout from './layout/Default'
 
 export class Index extends Component {
   render() {
     return (
-      <div>
-        <h1>Logs List Page</h1>
+      <DefaultLayout title={"Captain Logs Index"}>
         <ul>
             {this.props.allLogs.map((log, idx) => {
               return (
@@ -26,7 +26,7 @@ export class Index extends Component {
         <nav>
           <a href="/logs/new">Enter A New Log</a>
         </nav>
-      </div>
+      </DefaultLayout>
     )
   }
 }
