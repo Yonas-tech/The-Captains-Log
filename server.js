@@ -35,6 +35,15 @@ app.set('view engine', 'jsx');
 app.engine('jsx', require('jsx-view-engine').createEngine());
 
 
+// SEED 
+
+app.get('/logs/seed', (req, res)=>{
+    Logs.create(seed, (err, foundLog)=>{
+        res.redirect('/logs/');
+    })
+});
+
+
 // ROUTES: [I.N.D.U.C.E.S]
 
 // Index:
@@ -62,8 +71,18 @@ app.delete('/logs/:id', (req, res) =>{
 
 
 // Update:
+app.put('/logs/:id', (req,res)=>{
+    if(req.body.shipIsBroken == 'on'){
+        req.body.shipIsBroken = true;
+    }else{
+        req.body.shipIsBroken = false;
+    }
 
-
+    Logs.findByIdAndUpdate(req.params.id, req.body, (err, updatedLog)=>{
+        console.log(updatedLog.title)
+        res.redirect(`/logs/${req.params.id}`); 
+    });
+});
 
 
 // Create: 
@@ -79,11 +98,6 @@ app.post('/logs/', (req, res)=>{
     });
 })
 
-app.get('/logs/seed', (req, res)=>{
-    Logs.create(seed, (err, foundLog)=>{
-        res.redirect('/logs/');
-    })
-});
 
 
 // Edit: 
