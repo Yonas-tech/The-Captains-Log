@@ -19,7 +19,8 @@ mongoose.connection.once('open', () => {
     console.log('connected to mongo');
 });
 
-// Middleware
+// Middleware:
+
 // app.use((req, res, next) => {
 //     console.log('I run for all routes');
 //     next();
@@ -29,11 +30,12 @@ app.use(methodOverride('_method'));
 
 
 
-// JSX:
+// JSX View Engine:
 app.set('view engine', 'jsx');
 app.engine('jsx', require('jsx-view-engine').createEngine());
 
-// ROUTES: INDUCE
+
+// ROUTES: [I.N.D.U.C.E.S]
 
 // Index:
 app.get('/logs/', (req,res)=>{
@@ -45,15 +47,18 @@ app.get('/logs/', (req,res)=>{
 })
 
 
-
 // New:
 app.get('/logs/new', (req,res)=>{
     res.render('New');
 })
 
+
 // Delete:
-
-
+app.delete('/logs/:id', (req, res) =>{
+    Logs.findByIdAndRemove(req.params.id, (err, data)=>{
+        res.redirect('/logs/');
+    })
+})
 
 
 // Update:
