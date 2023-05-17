@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+import DefaultLayout from '../layout/Default';
 
 class Edit extends Component {
     render() {
         return (
-            <div>
+            <DefaultLayout title={'Edit Food Log'}>
                 <form action={`/foodLogs/${this.props.foundLog._id}?_method=PUT`} method="POST">
                     Time: <input type="text" name='time' defaultValue={this.props.foundLog.time}/> <br /><br />
                     Place: <input type="text" name='place' defaultValue={this.props.foundLog.place}/> <br /><br />
@@ -11,16 +12,9 @@ class Edit extends Component {
                     Drinks: <input type="text" name='drinks' defaultValue={this.props.foundLog.drinks}/> <br /><br />
                     <input type="submit" name='submit' value='Submit Changes' /> 
                 </form>
-            </div>
+            </DefaultLayout>
         )
     }
 }
 
 module.exports= Edit;
-
-// <h2>Time: {this.props.Log.time}</h2>
-//         <h2>Place: {this.props.Log.place}</h2>
-//         <h2>Foods: {this.props.Log.foods}</h2>
-//         <h2>Drinks: {this.props.Log.drinks}</h2>
-//         <h4>Log time: </h4><p>{this.props.Log.createdAt.toISOString()}</p>
-//         <a href="/">Back to Food Logs List</a>

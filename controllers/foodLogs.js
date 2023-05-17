@@ -43,10 +43,10 @@ router.put('/:id', (req,res)=>{
     }
 
     FoodLogs.findByIdAndUpdate(req.params.id, req.body, (err, updatedLog)=>{
-        console.log(updatedLog.title);
-        res.redirect('back');
+        console.log(updatedLog);
+        // res.redirect('back');
         // res.redirect('..');
-        // res.redirect(`/${req.params.id}`); 
+        res.redirect(`/foodLogs/${req.params.id}`); 
     });
 });
 
