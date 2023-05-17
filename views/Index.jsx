@@ -6,9 +6,11 @@ export class Index extends Component {
       <div>
         <h1>Logs List Page</h1>
         <ul>
-          
             {this.props.allLogs.map((log, idx) => {
-              return <li key={idx}><h2>{log.title}</h2></li>
+              return (
+              <li key={idx}>
+                <a href={`/logs/${log._id}`}><h2>{log.title}</h2></a>
+              </li>)
             })}
         </ul>
         <nav>

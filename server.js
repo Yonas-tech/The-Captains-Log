@@ -42,8 +42,8 @@ app.get('/logs/', (req,res)=>{
             allLogs: allLogs
         })
     })
-    
 })
+
 
 
 // New:
@@ -54,7 +54,11 @@ app.get('/logs/new', (req,res)=>{
 // Delete:
 
 
+
+
 // Update:
+
+
 
 
 // Create: 
@@ -82,8 +86,17 @@ app.get('/logs/seed', (req, res)=>{
 
 
 
+// Show: 
+app.get('/logs/:id',(req, res)=>{
+    Logs.findById(req.params.id, (err, foundLog)=>{
+        res.render('Show',{
+            Log: foundLog
+        });
+    });
+});
 
 
+// Listen
 app.listen(port, ()=>{
     console.log(`Server is listening on, ${port}`)
 })
