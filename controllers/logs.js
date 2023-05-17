@@ -1,6 +1,6 @@
-const Logs = require('../models/logs');
 const express = require('express');
 var router = express.Router();
+const Logs = require('../models/logs');
 
 // SEED 
 router.get('/seed', (req, res)=>{

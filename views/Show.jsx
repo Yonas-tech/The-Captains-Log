@@ -11,10 +11,9 @@ export class Show extends Component {
         <h2>Ship is Broken?</h2>
         <p>{this.props.Log.shipIsBroken.toString()}</p>
         <h3>Time the entry was created at: </h3><p>{this.props.Log.createdAt.toISOString()}</p>
-        <a href="/logs/">Back Logs List</a>
+        <a href="/logs/">Back to Logs List</a>
       </div>
     )
   }
 }
- 
-export default Show
+ export default Show

@@ -1,19 +1,22 @@
-const FoodLogs = require('../models/foodFoodLogs');
 const express = require('express');
 var router = express.Router();
+const FoodLogs = require('../models/foodLogs');
+const seed = require('../resource/foodSeed');
 
 // SEED 
-router.get('/seed', (req, res)=>{
-    FoodLogs.create(seed, (err, foundLog)=>{
-        res.redirect('/');
-    })
+router.get('/seed', async (req, res)=>{
+    await FoodLogs.deleteMany({});
+    await FoodLogs.insertMany(seed);
+    // FoodLogs.create(seed, (err, foundLog)=>{
+    //     res.redirect('/foodLogs');
+    // })
 });
 
 
 // Index:
 router.get('/', (req,res)=>{
     FoodLogs.find({}, (err, allLogs)=>{
-        res.render('Index', {
+        res.render('../views/foods/Index', {
             allLogs: allLogs
         })
     })
@@ -21,7 +24,7 @@ router.get('/', (req,res)=>{
 
 // New:
 router.get('/new', (req,res)=>{
-    res.render('New');
+    res.render('../views/foods/New');
 })
 
 // Delete:
@@ -40,8 +43,10 @@ router.put('/:id', (req,res)=>{
     }
 
     FoodLogs.findByIdAndUpdate(req.params.id, req.body, (err, updatedLog)=>{
-        console.log(updatedLog.title)
-        res.redirect(`/${req.params.id}`); 
+        console.log(updatedLog.title);
+        res.redirect('back');
+        // res.redirect('..');
+        // res.redirect(`/${req.params.id}`); 
     });
 });
 
@@ -64,7 +69,7 @@ router.get('/:id/edit', (req,res)=>{
     FoodLogs.findById(req.params.id, (err, foundLog)=>{
         if(!err){
             res.render(
-                'Edit', {log: foundLog}
+                '../views/foods/Edit', {foundLog: foundLog}
             );
         } else {
             res.send({msg: err.message})
@@ -75,7 +80,7 @@ router.get('/:id/edit', (req,res)=>{
 // Show: 
 router.get('/:id',(req, res)=>{
     FoodLogs.findById(req.params.id, (err, foundLog)=>{
-        res.render('Show',{
+        res.render('../views/foods/Show',{
             Log: foundLog
         });
     });
