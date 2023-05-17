@@ -1,33 +1,16 @@
-const methodOverride = require('method-override');
-const seed = require("../resource/seed");
 const Logs = require('../models/logs');
 const express = require('express');
-const app = express();
-
-
-
-
-// Middleware:
-app.use(express.urlencoded({ extended: false })); //body-parser
-app.use(methodOverride('_method'));
-
-
-// JSX View Engine:
-app.set('view engine', 'jsx');
-app.engine('jsx', require('jsx-view-engine').createEngine());
-
+var router = express.Router();
 
 // SEED 
-app.get('/logs/seed', (req, res)=>{
+router.get('/seed', (req, res)=>{
     Logs.create(seed, (err, foundLog)=>{
         res.redirect('/logs/');
     })
 });
 
-// ROUTES: [I.N.D.U.C.E.S]
-
 // Index:
-app.get('/logs/', (req,res)=>{
+router.get('/', (req,res)=>{
     Logs.find({}, (err, allLogs)=>{
         res.render('Index', {
             allLogs: allLogs
@@ -36,19 +19,19 @@ app.get('/logs/', (req,res)=>{
 })
 
 // New:
-app.get('/logs/new', (req,res)=>{
+router.get('/new', (req,res)=>{
     res.render('New');
 })
 
 // Delete:
-app.delete('/logs/:id', (req, res) =>{
+router.delete('/:id', (req, res) =>{
     Logs.findByIdAndRemove(req.params.id, (err, data)=>{
         res.redirect('/logs/');
     })
 })
 
 // Update:
-app.put('/logs/:id', (req,res)=>{
+router.put('/:id', (req,res)=>{
     if(req.body.shipIsBroken == 'on'){
         req.body.shipIsBroken = true;
     }else{
@@ -62,7 +45,7 @@ app.put('/logs/:id', (req,res)=>{
 });
 
 // Create: 
-app.post('/logs/', (req, res)=>{
+router.post('/', (req, res)=>{
     if(req.body.shipIsBroken == 'on'){
         req.body.shipIsBroken = true;
     }else{
@@ -70,12 +53,12 @@ app.post('/logs/', (req, res)=>{
     }
 
     Logs.create(req.body, (error, createdLogs)=>{
-        res.redirect('/logs/')
+        res.redirect('/')
     });
 })
 
 // Edit: 
-app.get('/logs/:id/edit', (req,res)=>{
+router.get('/:id/edit', (req,res)=>{
     console.log(req.params)
     Logs.findById(req.params.id, (err, foundLog)=>{
         if(!err){
@@ -89,7 +72,7 @@ app.get('/logs/:id/edit', (req,res)=>{
 });
 
 // Show: 
-app.get('/logs/:id',(req, res)=>{
+router.get('/:id',(req, res)=>{
     Logs.findById(req.params.id, (err, foundLog)=>{
         res.render('Show',{
             Log: foundLog
@@ -97,4 +80,4 @@ app.get('/logs/:id',(req, res)=>{
     });
 });
 
-module.exports= app;
+module.exports= router;
